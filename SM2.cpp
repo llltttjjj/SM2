@@ -93,7 +93,8 @@ public:
 		os << "(" << n.x << ", " << n.y << ")";
 		return os;
 	}
-	const bool operator!=(const ellPoint& p) { if (x == p.x && y == p.y) return 0; return 1; }
+	const bool operator!=(const ellPoint& p) const { if (x == p.x && y == p.y) return 0; return 1; }
+	const bool operator==(const ellPoint& p) const { if (*this != p) return 0; return 1; }
 	void place(uint32_t* pos)const {
 		ellPoint p = *this;
 		uint32_t* mem = pos;
@@ -178,14 +179,10 @@ void sm2_test(const uint32_t* arra,const uint32_t* arrb) {
 		cout << "Incorrect!" << endl;
 }
 //Assume that every message in set is 256 bits
-void EllipticCurveMultisetHash(uint32_t** messageSet, const uint32_t& numOfElements, uint32_t* hash) {     //https://arxiv.org/pdf/1601.06502v1.pdf
-	for (int i = 0; i < 8; i++)
-		hash[i] = 0;
+void EllipticCurveMultisetHash(uint32_t** messageSet, const uint32_t& numOfElements, ellPoint hash) {     //https://arxiv.org/pdf/1601.06502v1.pdf
 	sm3_context ctx(256),_ctx(288);
 	uint32_t output[9],_output[8];
 	ellPoint temp;
-	for (int i = 0; i < 8; i++)
-		hash[i] = 0;
 	for (uint32_t i = 0; i < numOfElements; i++) {
 		ctx.sm3_hash(messageSet[i], &output[1]);
 		for (output[0] = 0; output[0] < pow(31); output[0]++) {
@@ -193,24 +190,19 @@ void EllipticCurveMultisetHash(uint32_t** messageSet, const uint32_t& numOfEleme
 			if(temp.setEllPoint(transfer(_output)))     //check if this x is on the elliptic curve
 				break;
 		}
-		temp.pointHash(_output);
-		for (int i = 0; i < 8; i++)
-			hash[i] ^= _output[i];
+		if (i == 0)
+			hash = temp;
+		if (i > 0)
+			hash += temp;
 	}
-}
-inline bool check(const uint32_t* h1, const uint32_t* h2) {
-	for (int i = 0; i < 8; i++)
-		if (h1[i] != h2[i])
-			return 0;
-	return 1;
 }
 #include<cstdlib>
 void ECMHtest() {     //Test The Homomorphic Of ECMH Function
 	uint32_t** Message = new uint32_t*[3];
 	for (int i = 0; i < 3; i++)
 		Message[i] = new uint32_t[8];
-	uint32_t hash123[8];
-	uint32_t hash1[8], hash12[8], hash23[8], hash3[8];
+	ellPoint hash123;
+	ellPoint hash1, hash12, hash23, hash3;
 	for (int i = 0; i < 3; i++)
 		for (int j = 0; j < 3; j++)
 			Message[i][j] = rand();     //filled with random message
@@ -222,11 +214,10 @@ void ECMHtest() {     //Test The Homomorphic Of ECMH Function
 	for (int i = 0; i < 3; i++)
 		delete[] Message[i];
 	delete[] Message;
-	for (int i = 0; i < 8; i++) {     //compute hash
-		hash1[i] ^= hash23[i];
-		hash12[i] ^= hash3[i];
-	}
-	if (check(hash1, hash123) && check(hash12, hash123)) {
+	//compute hash
+	hash1 += hash23;
+	hash12 += hash3;
+	if (hash1 == hash123 && hash12 == hash123) {
 		cout << "Check!" << endl;
 		return;
 	}
@@ -240,6 +231,6 @@ int main()
 	const uint32_t arrb[8] = { 0x63E4C6D3 ,0xB23B0C84 ,0x9CF84241 ,0x484BFE48 ,0xF61D59A5 ,0xB16BA06E ,0x6E12D1DA ,0x27C5249A };
 	a = transfer(arra); b = transfer(arrb);
 	//sm2_test(arra, arrb);
-	//ECMHtest();
+	ECMHtest();
 	return 0;
 }
