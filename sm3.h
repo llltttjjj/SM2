@@ -1,4 +1,5 @@
-/*This file is used as hash function in sm2.cpp*/
+#ifndef SM3_H_
+#define SM3_H_
 #include<iostream>
 using namespace std;
 static const uint64_t pow(int n) {
@@ -114,3 +115,4 @@ public:
 		delete[] info;
 	}
 };
+#endif
