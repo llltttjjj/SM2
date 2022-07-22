@@ -1,29 +1,15 @@
 #include<iostream>
 #include<NTL/ZZ.h>
 #include"SM3.h"
+#include"GooglePasswordCheckup.h"
 using namespace NTL;
 using namespace std;
 ZZ mod, n;
 ZZ a, b;     //Elliptic Curve Function: y ^ 2 = x ^ 3 + a * x + b
 const int SIZE = 256;
-const ZZ pow(uint32_t n) {
-	if (n == 0)
-		return (ZZ)1;
-	return 2 * pow(n - 1);
-}
-const ZZ modPow(const ZZ& num,ZZ t,const ZZ& n) {
-	ZZ temp, ans;
-	ans = 1;
-	temp = num;
-	while (t > 0) {
-		if (t % 2 == 1)
-			ans = ans * temp % n;
-		temp *= temp;
-		temp %= n;
-		t /= 2;
-	}
-	return ans;
-}
+const ZZ pow(uint32_t n);
+//num ^ t % n
+const ZZ modPow(const ZZ& num, ZZ t, const ZZ& n);
 const uint32_t cut(const ZZ& num) {     //Take Low 32 Bits Of ZZ, Transfer Into Uint32_t
 	uint32_t n = 0;
 	uint32_t temp = 1;
@@ -36,7 +22,7 @@ const uint32_t cut(const ZZ& num) {     //Take Low 32 Bits Of ZZ, Transfer Into 
 	}
 	return n;
 }
-ZZ reverse(const ZZ& num, const ZZ& n) { return modPow(num, n - 2, n); }
+const ZZ reverse(const ZZ& num, const ZZ& n);
 class ellPoint {
 public:
 	ZZ x,y;
@@ -109,20 +95,7 @@ public:
 		}
 	}
 };
-const ZZ transfer(const uint32_t* ptr) {
-	ZZ ans = (ZZ)0;
-	ZZ temp;
-	for (int i = 0; i < 8; i++) {
-		if (ptr[i] >= 2147483648) {
-			temp = ptr[i];
-			temp += pow((uint32_t)32);
-		}
-		else
-			temp = ptr[i];
-		ans += temp * pow((uint32_t)(7 - i) * 32);
-	}
-	return ans;
-}
+const ZZ transfer(const uint32_t* ptr);
 static struct RS {
 	ZZ r, s;
 };
@@ -231,6 +204,7 @@ int main()
 	const uint32_t arrb[8] = { 0x63E4C6D3 ,0xB23B0C84 ,0x9CF84241 ,0x484BFE48 ,0xF61D59A5 ,0xB16BA06E ,0x6E12D1DA ,0x27C5249A };
 	a = transfer(arra); b = transfer(arrb);
 	//sm2_test(arra, arrb);
-	ECMHtest();
+	//ECMHtest();
+	checkUpTest();
 	return 0;
 }
