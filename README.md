@@ -5,11 +5,11 @@ Introduction: A simple test of sm2 identifier and some usage
 
 Accomplished project: 
 
-                      1. impl sm2 with RFC6979     //sm2_test()
+                      1. impl the naive birthday attack of reduced SM3     //sm2_test()
 
 code output:
 
-![image](https://user-images.githubusercontent.com/87689532/181862308-7c7dbcc7-6b9c-40c1-bd61-a33c759e748c.png)
+
 
                       2. impl the ECMH scheme      //ECMHtest()
 
@@ -19,6 +19,7 @@ code output:
 
                       3. impl analysis by Google   //checkUptest()
 
+![image](https://user-images.githubusercontent.com/87689532/181867113-8ba019d5-cb53-48e5-83cb-ae8e70362fe2.png)
 
 
 Have trouble dealing with real network communication, several other projects are unfinished.
