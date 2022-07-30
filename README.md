@@ -3,7 +3,9 @@ Group members: 刘天骏 202000460002
 
 Introduction: A simple test of sm2 identifier and some usage
 
-Accomplished project: 1. impl sm2 with RFC6979     //sm2_test()
+Accomplished project: 
+
+                      1. impl sm2 with RFC6979     //sm2_test()
 
 code output:
 
