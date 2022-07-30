@@ -5,19 +5,21 @@ Introduction: A simple test of sm2 identifier and some usage
 
 Accomplished project: 
 
-                      1. impl the naive birthday attack of reduced SM3     //sm2_test()
+                      1. impl sm2 with RFC6979     //sm2_test()
 
-code output:
+output:
 
 
 
                       2. impl the ECMH scheme      //ECMHtest()
 
-code output:
+output:
 
 ![image](https://user-images.githubusercontent.com/87689532/181862249-83b494ab-e7a9-416d-8bb2-9701ef618544.png)
 
                       3. impl analysis by Google   //checkUptest()
+
+output:
 
 ![image](https://user-images.githubusercontent.com/87689532/181867113-8ba019d5-cb53-48e5-83cb-ae8e70362fe2.png)
 
