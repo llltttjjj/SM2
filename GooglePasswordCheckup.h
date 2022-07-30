@@ -133,7 +133,7 @@ const bool UserNameAndPasswordDetection(const ZZ& h_ab, const ZZ& N, const ZZ& d
 }
 void checkUpTest() {
 	ZZ b = ProcessDataInfo();
-	for (int i = 1; i < 6; i++) {     //5 Users that their passwords are leaked
+	for (int i = 0; i < 5; i++) {     //5 Users that their passwords are leaked
 		ZZ N, d;
 		ZZ* VSet = nullptr;
 		int num;
@@ -144,7 +144,7 @@ void checkUpTest() {
 		else
 			cout << "Didn't found the leaking." << endl;
 	}
-	for (int i = 1; i < 6; i++) {     //5 Users that their passwords are not leaked
+	for (int i = 0; i < 5; i++) {     //5 Users that their passwords are not leaked
 		ZZ N, d;
 		ZZ* VSet = nullptr;
 		int num;
