@@ -9,7 +9,7 @@ Accomplished project:
 
 output:
 
-
+![image](https://user-images.githubusercontent.com/87689532/182011174-6b4f8633-b706-4ac4-b0e6-861b26bdb160.png)
 
                       2. impl the ECMH scheme      //ECMHtest()
 
@@ -23,8 +23,7 @@ output:
 
 ![image](https://user-images.githubusercontent.com/87689532/181867113-8ba019d5-cb53-48e5-83cb-ae8e70362fe2.png)
 
-
-Have trouble dealing with real network communication, several other projects are unfinished.
+This project included hash 1 million random username+password, might take a long time to test.
 
 To run above codes, you'll need WinNTL-11_5_1 functions.
 
